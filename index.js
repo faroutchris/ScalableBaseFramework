@@ -1,47 +1,6 @@
 'use strict';
 
-var App = {
-    createStore: function createStore(reducer) { // Util?
-        var state;
-        var listeners = [];
-
-        var getState = function() 
-        {
-            return state;
-        };
-
-        var dispatch = function(action) 
-        {
-            console.log(action);
-            console.log('PREVIOUS STATE', state);
-            state = reducer(state, action);
-            console.log('NEW STATE', state)
-            listeners.forEach(function(listener) 
-            {
-                return listener();
-            });
-        };
-
-        var subscribe = function(listener) 
-        {
-            listeners.push(listener);
-            return function unsubscribe(listener)
-            {
-                listeners = listeners.filter(function(l) {
-                    return l !== listener
-                });
-            }
-        };
-
-        dispatch({ type: '@@INIT' }); // Dispatch dummy action to initialize the reducer to return the initial value
-
-        return {
-            getState: getState,
-            dispatch: dispatch,
-            subscribe: subscribe
-        };
-    }
-};
+var App = {};
 
 App.View = (function($, Handlebars)
 {
@@ -89,10 +48,7 @@ App.Scope = function(core, reducer, id) // App.connect ?
     //Modules only communicate through the scope
     //It also provides a unified interface for modules with helper functions
 
-    console.log(core)
-
-    var store = App.createStore(reducer);
-    //var selector = '#' + toDash(id);
+    var store = createStore(reducer);
 
     function wrapDispatch(action) 
     {
@@ -104,7 +60,8 @@ App.Scope = function(core, reducer, id) // App.connect ?
         getState: store.getState,
         subscribe: store.subscribe,
         dispatch: wrapDispatch,
-        
+
+        $root: '#' + toDash(id),        
         append: core.view.append,
         remove: core.view.remove,
         templateToHtml: core.view.templateToHtml,
@@ -117,8 +74,7 @@ App.Core = (function()
 {
     /**
      * Manage module lifecycle.
-     * Enable inter-module communication (?)
-     * Some error handling
+     * TODO: error handling
      */
 
     var modules = {};
@@ -132,9 +88,10 @@ App.Core = (function()
 
         register: function(id, reducer, creatorCallback)
         {
-            modules[id] = {};
-            modules[id].creator = creatorCallback;
-            modules[id].reducer = reducer; // This couples the reducer to the module... think of some other solution.
+            modules[id] = {
+                creator: creatorCallback,
+                reducer: reducer // This couples the reducer to the module... think of some other solution.
+            };
             console.log(modules)
         },
     
@@ -155,10 +112,7 @@ App.Core = (function()
         {            
             for (var id in modules) 
             {
-                if (modules[id]) 
-                {
-                    this.start(id);
-                }
+                modules.hasOwnProperty(id) ? this.start.id : new Error('module does not exist');
             }
         },
 
@@ -167,10 +121,12 @@ App.Core = (function()
     }
 })();
 
-var Main = (function() 
+var Main = (function()
 {
-    // Create App.Core.addReducer
+    // Application specific code
+
     var myReducer = function(state, action) {
+    // TODO: Create App.Core.addReducer
         if (!state) {
             state = {
                 count: 0,
@@ -181,7 +137,9 @@ var Main = (function() 
         switch (action.type)
         {
             case 'YO':
-                return Object.assign(state, { count: action.payload ? state.count + action.payload : state.count + 1 });
+                return Object.assign(state, { 
+                    count: action.payload ? state.count + action.payload : state.count + 1 
+                });
             case 'MESSAGE':
                 return Object.assign(state, { message: action.payload });
             default:
@@ -190,7 +148,8 @@ var Main = (function() 
     }
 
     var template = [
-        '<h1 class="message">{{ message }}</h1>'
+        '<h1 class="message">{{ message }}</h1>',
+        '<input class="count" type="number" value="{{ count }}"/>'
     ].join('\n');
 
     App.Core.register('myModule', myReducer, function(scope) 
@@ -199,7 +158,7 @@ var Main = (function() 
 
         var unsubscribe = scope.subscribe(handleNextState);
 
-        //var count = new Observable(initialState.count, updateCount);
+        var count = new Observable(initialState.count, updateCount);
         var message = new Observable(initialState.message, updateMessage);
 
         function init()
@@ -216,17 +175,28 @@ var Main = (function() 
                 scope.dispatch({ type: 'MESSAGE', payload: 'Goodbye' });
             }, 3000);
 
+            setInterval(function() {
+                scope.dispatch({ type: 'YO' });
+            }, 1000);
+
         }
 
         function handleNextState()
         {
             var state = scope.getState();
+
             message.set(state.message);
+            count.set(state.count);
         }
 
         function updateMessage (value)
         {
             $('.message').html(value);
+        }
+
+        function updateCount (value) {
+            console.log($('.count'))
+            $('.count').val(value);
         }
 
         function destroy()
