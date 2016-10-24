@@ -28,9 +28,11 @@
 (function() {
     // Application specific code
 
+    App.Core.store = createStore(combineReducers(App.Core._reducers));
+
     App.Core.start('myModule');
 
-    console.log(App.Core._modules, App.Core._instances);
+    console.log(App.Core._modules, App.Core._instances, App.Core._reducers);
 })();
 
 </script>

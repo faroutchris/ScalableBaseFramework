@@ -11,6 +11,8 @@ App.Scope = function(core, id)
         core.store.dispatch(wrappedAction);
     }
 
+    console.log(core)
+
     return {
         getState: core.store.getState,
         subscribe: core.store.subscribe,

@@ -33,7 +33,8 @@ App.Core = (function()
                 if ( instances[id] === undefined ) {
                     // App.Scope ( this, options, id )
                     // don't remember why I wanted to add options, there was a good reason... maybe to specify which part of the state tree the scope should use?
-                    instances[id] = modules[id].creator( App.Scope(this, id) );                }
+                    instances[id] = modules[id].creator( App.Scope(this, id) );
+                }
 
                 instances[id].init();
             }
@@ -51,10 +52,11 @@ App.Core = (function()
         destroy: function() {},
 
         // Reducers
-        store: createStore(reducers['myReducer']),
+        store: null,
 
         addReducer: function(key, reducer) 
         {
+            console.log(key, reducer)
             reducers[key] = reducer;
             console.log(this)
         }

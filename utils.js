@@ -69,10 +69,15 @@ function createStore(reducer) {
 
 function combineReducers(reducers) 
 {
-    return function(state, action) 
+    return function(state, action)
     {
+        if (!state) {
+            state = {};
+        }
+
         return Object.keys(reducers).reduce(function(nextState, key) 
         {
+            console.log(reducers, key, reducers[key])
             nextState[key] = reducers[key](state[key], action);
         }, {});
     }
