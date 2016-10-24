@@ -1,0 +1,20 @@
+{
+  "name": "ScalableBaseFramework",
+  "main": "index.js",
+  "homepage": "https://github.com/faroutchris/ScalableBaseFramework",
+  "authors": [
+    "faroutchris <georgiev.christo@gmail.com>"
+  ],
+  "description": "A scalable base for Javascript applications",
+  "keywords": [
+    "framework",
+    "base",
+    "minimal"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "handlebars": "^4.0.5",
+    "jquery": "^3.1.1"
+  }
+}
