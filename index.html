@@ -14,11 +14,11 @@
 <!-- App -->
 <script src="index.js"></script>
 <script src="App.Scope.js"></script>
-<script src="App.View.js"></script>
 <script src="App.Core.js"></script>
+<script src="App.Core.View.js"></script>
 
 <!-- Store -->
-<script src="store/myReducer.js"></script>
+<script src="store/index.js"></script>
 
 <!-- Modules -->
 <script src="modules/Todo/index.js"></script>
@@ -27,6 +27,7 @@
 
 (function() {
     // Application specific code
+
     App.Core.start('myModule');
 
     console.log(App.Core._modules, App.Core._instances);

@@ -1,6 +1,6 @@
 'use strict';
 
-App.View = (function($, Handlebars)
+App.Core.View = (function($, Handlebars)
 {
     return {
         append: function($target, html, callback)
@@ -39,4 +39,4 @@ App.View = (function($, Handlebars)
             });
         }
     }
-});
+})(jQuery, Handlebars);

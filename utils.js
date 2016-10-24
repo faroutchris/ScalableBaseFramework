@@ -66,3 +66,32 @@ function createStore(reducer) {
         subscribe: subscribe
     };
 }
+
+function combineReducers(reducers) 
+{
+    return function(state, action) 
+    {
+        return Object.keys(reducers).reduce(function(nextState, key) 
+        {
+            nextState[key] = reducers[key](state[key], action);
+        }, {});
+    }
+}
+
+var curry = function(fn){
+    if(typeof fn!=='function'){
+        throw Error('No function provided');
+    }
+
+    var slice = [].slice;
+    return function curriedFn(){
+      var args = slice.call(arguments);
+      if(args.length < fn.length){
+        return function(){
+          return curriedFn.apply(null, args.concat( slice.call(arguments) ));
+        };
+      }
+
+      return fn.apply(null, args);
+    };
+};

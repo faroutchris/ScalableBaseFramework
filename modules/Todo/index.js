@@ -5,9 +5,11 @@ var template = [
     '<input class="count" type="number" value="{{ count }}"/>'
 ].join('\n');
 
-App.Core.register('myModule', myReducer, function(scope) 
+App.Core.register('myModule', function(scope) 
 {   
+    console.log(scope)
     var initialState = scope.getState();
+    console.log('initialState', initialState)
 
     var unsubscribe = scope.subscribe(handleNextState);
 
@@ -20,17 +22,11 @@ App.Core.register('myModule', myReducer, function(scope)
         scope.append($('body'), html);
 
         scope.dispatch({ type: 'YO', payload: 1 });
-        scope.dispatch({ type: 'YO', payload: 5 });
-        scope.dispatch({ type: 'YO', payload: 10 });
         scope.dispatch({ type: 'MESSAGE', payload: 'Hello World' });
 
         setTimeout(function() {
             scope.dispatch({ type: 'MESSAGE', payload: 'Goodbye' });
         }, 3000);
-
-        setInterval(function() {
-            scope.dispatch({ type: 'YO' });
-        }, 1000);
     }
 
     function handleNextState()
@@ -58,4 +54,4 @@ App.Core.register('myModule', myReducer, function(scope)
     return {
         init: init
     }
-})
+});

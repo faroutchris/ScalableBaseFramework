@@ -1,7 +1,6 @@
 'use strict';
 
-var myReducer = function(state, action) {
-// TODO: Create App.Core.addReducer
+App.Core.addReducer('myReducer', function(state, action) {
     if (!state) {
         state = {
             count: 100,
@@ -12,12 +11,12 @@ var myReducer = function(state, action) {
     switch (action.type)
     {
         case 'YO':
-            return Object.assign(state, { 
+            return Object.assign({}, state, { 
                 count: action.payload ? state.count + action.payload : state.count + 1 
             });
         case 'MESSAGE':
-            return Object.assign(state, { message: action.payload });
+            return Object.assign({}, state, { message: action.payload });
         default:
             return state;
     }
-}
+});
