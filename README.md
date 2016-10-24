@@ -1,5 +1,4 @@
 # ScalableBaseFramework
-Inspired/stolen from Nicholas Zakas talk on App Architecture, Redux and a bunch of articles and code examples on the internet.
 
 ## Install
 
