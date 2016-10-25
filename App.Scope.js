@@ -1,28 +1,28 @@
 'use strict';
 
-App.Scope = function(core, reducer, id) // App.connect ?
+App.Scope = function(core, id)
 {
     //Modules only communicate through the scope
     //It also provides a unified interface for modules with helper functions
 
-    var store = createStore(reducer);
-
-    function wrapDispatch(action) 
-    {
-        var wrappedAction = Object.assign(action, {dispatchedFrom: id})
-        store.dispatch(wrappedAction);
+    function wrapDispatch(action)
+    { // add a field on the action to indicate which module dispatched the action
+        var wrappedAction = Object.assign({}, action, {dispatchedFrom: id})
+        core.store.dispatch(wrappedAction);
     }
 
+    console.log('app.scope', core, core.store.getState())
+
     return {
-        getState: store.getState,
-        subscribe: store.subscribe,
+        getState: core.store.getState,
+        subscribe: core.store.subscribe,
         dispatch: wrapDispatch,
 
-        $root: '#' + toDash(id),        
-        append: core.view.append,
-        remove: core.view.remove,
-        templateToHtml: core.view.templateToHtml,
-        addEvent: core.view.addEvent,
-        removeEvent: core.view.removeEvent,
+        $root: '#' + toDash(id),
+        append: core.View.append,
+        remove: core.View.remove,
+        templateToHtml: core.View.templateToHtml,
+        addEvent: core.View.addEvent,
+        removeEvent: core.View.removeEvent,
     };
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-App.View = (function($, Handlebars)
+App.Core.View = (function($, Handlebars)
 {
     return {
         append: function($target, html, callback)
@@ -14,8 +14,8 @@ App.View = (function($, Handlebars)
             }
         },
 
-        remove: function() {
-            // TODO
+        remove: function($target) {
+            $target.remove();
         },
 
         templateToHtml: function(data, template)
@@ -39,4 +39,4 @@ App.View = (function($, Handlebars)
             });
         }
     }
-});
+})(jQuery, Handlebars);
