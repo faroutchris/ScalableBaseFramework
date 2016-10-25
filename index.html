@@ -9,6 +9,7 @@
 <!-- Dependencies -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/handlebars/handlebars.min.js"></script>
+<script src="bower_components/redux/index.js"></script>
 <script src="utils.js"></script>
 
 <!-- App -->
@@ -22,17 +23,34 @@
 
 <!-- Modules -->
 <script src="modules/Todo/index.js"></script>
+<script src="modules/Todo/todo.js"></script>
 
 <script>
 
 (function() {
+
     // Application specific code
 
-    App.Core.store = createStore(combineReducers(App.Core._reducers));
+    var logger = function(store) {
+        return function(next) {
+            return function(action) {
+                console.group(action.type);
+                console.info('dispatching', action)
+                var result = next(action);
+                console.log('next state', store.getState());
+                console.groupEnd(action.type);
+                return result;
+            }
+        }
+    };
+
+    var createStoreWithMiddleware = Redux.applyMiddleware(logger)(Redux.createStore);
+
+    App.Core.store = createStoreWithMiddleware(Redux.combineReducers(App.Core.getReducers()));
 
     App.Core.start('myModule');
+    App.Core.start('todo');
 
-    console.log(App.Core._modules, App.Core._instances, App.Core._reducers);
 })();
 
 </script>

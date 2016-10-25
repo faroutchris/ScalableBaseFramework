@@ -6,12 +6,12 @@ App.Scope = function(core, id)
     //It also provides a unified interface for modules with helper functions
 
     function wrapDispatch(action)
-    {
-        var wrappedAction = Object.assign(action, {dispatchedFrom: id})
+    { // add a field on the action to indicate which module dispatched the action
+        var wrappedAction = Object.assign({}, action, {dispatchedFrom: id})
         core.store.dispatch(wrappedAction);
     }
 
-    console.log(core)
+    console.log('app.scope', core, core.store.getState())
 
     return {
         getState: core.store.getState,

@@ -6,6 +6,10 @@ function toDash(str) {
     })
 }
 
+function isFunction(object) {
+    return !!(object && object.constructor && object.call && object.apply);
+}
+
 // Super naive implementation of observable variables
 function Observable(value, callback) {
     this.cached = value;
@@ -25,63 +29,63 @@ Observable.prototype = {
     }
 }
 
-// createStore implementation
-function createStore(reducer) {
-    var state;
-    var listeners = [];
+// // createStore implementation
+// function createStore(reducer) {
+//     var state;
+//     var listeners = [];
 
-    var getState = function() 
-    {
-        return state;
-    };
+//     var getState = function() 
+//     {
+//         return state;
+//     };
 
-    var dispatch = function(action) 
-    {
-        console.log(action);
-        console.log('PREVIOUS STATE', state);
-        state = reducer(state, action);
-        console.log('NEW STATE', state)
-        listeners.forEach(function(listener) 
-        {
-            return listener();
-        });
-    };
+//     var dispatch = function(action) 
+//     {
+//         console.log(action);
+//         console.log('PREVIOUS STATE', state);
+//         state = reducer(state, action);
+//         console.log('NEW STATE', state)
+//         listeners.forEach(function(listener) 
+//         {
+//             return listener();
+//         });
+//     };
 
-    var subscribe = function(listener) 
-    {
-        listeners.push(listener);
-        return function unsubscribe(listener)
-        {
-            listeners = listeners.filter(function(l) {
-                return l !== listener
-            });
-        }
-    };
+//     var subscribe = function(listener) 
+//     {
+//         listeners.push(listener);
+//         return function unsubscribe(listener)
+//         {
+//             listeners = listeners.filter(function(l) {
+//                 return l !== listener
+//             });
+//         }
+//     };
 
-    dispatch({ type: '@@INIT' }); // Dispatch dummy action to initialize the reducer to return the initial value
+//     dispatch({ type: '@@INIT' }); // Dispatch dummy action to initialize the reducer to return the initial value
 
-    return {
-        getState: getState,
-        dispatch: dispatch,
-        subscribe: subscribe
-    };
-}
+//     return {
+//         getState: getState,
+//         dispatch: dispatch,
+//         subscribe: subscribe
+//     };
+// }
 
-function combineReducers(reducers) 
-{
-    return function(state, action)
-    {
-        if (!state) {
-            state = {};
-        }
+// function combineReducers(reducers) 
+// {
+//     return function(state, action)
+//     {
+//         if (!state) {
+//             state = {};
+//         }
 
-        return Object.keys(reducers).reduce(function(nextState, key) 
-        {
-            console.log(reducers, key, reducers[key])
-            nextState[key] = reducers[key](state[key], action);
-        }, {});
-    }
-}
+//         return Object.keys(reducers).reduce(function(nextState, key) 
+//         {
+//             console.log(reducers, key, reducers[key])
+//             nextState[key] = reducers[key](state[key], action);
+//         }, {});
+//     }
+// }
 
 var curry = function(fn){
     if(typeof fn!=='function'){

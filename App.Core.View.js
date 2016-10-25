@@ -14,8 +14,8 @@ App.Core.View = (function($, Handlebars)
             }
         },
 
-        remove: function() {
-            // TODO
+        remove: function($target) {
+            $target.remove();
         },
 
         templateToHtml: function(data, template)
