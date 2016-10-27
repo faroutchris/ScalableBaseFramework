@@ -1,0 +1,8 @@
+<div data-id="{{ moduelId }}">
+    <input type="text" id="input" placeholder="Type a todo">
+    <ul class="list">
+    {{#each todos}}
+        <li>{{ this }}</li>
+    {{/each}}
+    </ul>
+</div>

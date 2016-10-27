@@ -5,6 +5,9 @@
     <title>Scalable Base Framework</title>
 </head>
 <body>
+
+    <div id="app"></div>
+
 </body>
 <!-- Dependencies -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -23,7 +26,6 @@
 
 <!-- Modules -->
 <script src="modules/Todo/index.js"></script>
-<script src="modules/Todo/todo.js"></script>
 
 <script>
 
@@ -31,24 +33,12 @@
 
     // Application specific code
 
-    var logger = function(store) {
-        return function(next) {
-            return function(action) {
-                console.group(action.type);
-                console.info('dispatching', action)
-                var result = next(action);
-                console.log('next state', store.getState());
-                console.groupEnd(action.type);
-                return result;
-            }
-        }
-    };
-
     var createStoreWithMiddleware = Redux.applyMiddleware(logger)(Redux.createStore);
 
-    App.Core.store = createStoreWithMiddleware(Redux.combineReducers(App.Core.getReducers()));
+    App.Core.store = createStoreWithMiddleware(
+        Redux.combineReducers(App.Core.getReducers())
+    );
 
-    App.Core.start('myModule');
     App.Core.start('todo');
 
 })();
