@@ -1,6 +1,6 @@
 'use strict';
 
-App.Scope = function(core, id)
+App.Scope = function(core, options, id)
 {
     //Modules only communicate through the scope
     //It also provides a unified interface for modules with helper functions
@@ -11,14 +11,20 @@ App.Scope = function(core, id)
         core.store.dispatch(wrappedAction);
     }
 
+    function wrapGetState() 
+    {
+        return core.store.getState()[options.select];
+    }
+
     console.log('app.scope', core, core.store.getState())
 
     return {
-        getState: core.store.getState,
-        subscribe: core.store.subscribe,
+        getState: wrapGetState,
         dispatch: wrapDispatch,
+        subscribe: core.store.subscribe,
 
-        $root: '#' + toDash(id),
+        moduleId: id,
+        $root: '*[data-moduleid="' +  toDash(id) + '"]',
         append: core.View.append,
         remove: core.View.remove,
         templateToHtml: core.View.templateToHtml,

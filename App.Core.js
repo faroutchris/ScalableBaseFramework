@@ -14,15 +14,14 @@ App.Core = (function()
     var reducers = {};
 
     return {
-        _modules: modules, // temporary, for debugging
-        _instances: instances, // temporary, for debugging
         
-        register: function(id, creatorCallback)
+        register: function(id, options, creatorCallback)
         {
             if (isFunction(creatorCallback)) {
                 // The important bit ->
                 modules[id] = {
                     creator: creatorCallback,
+                    options: options
                 };
             } else {
                 throw new Error(
@@ -36,10 +35,7 @@ App.Core = (function()
         {
             if (modules[id]) {
                 if ( instances[id] === undefined ) { // Check that the instance isn't already running
-                    // App.Scope ( this, options, id )
-                    // don't remember why I wanted to add options, there was a good reason... 
-                    // maybe to specify which part of the state tree the scope should use?
-                    instances[id] = modules[id].creator( App.Scope(this, id) );
+                    instances[id] = modules[id].creator( App.Scope(this, modules[id].options, id) );
                 } else {
                     throw new Error(id + ' is already a running instance.');
                 }
@@ -54,7 +50,7 @@ App.Core = (function()
         {
             for (var id in modules) 
             {
-                modules.hasOwnProperty(id) ? this.start(id) : new Error( id + ' has not been registered');
+                modules.hasOwnProperty(id) ? this.start(id) : console.error( id + ' has not been registered');
             }
         },
 

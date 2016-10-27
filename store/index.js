@@ -1,7 +1,9 @@
 'use strict';
 
-App.Core.addReducer('myReducer', function(state, action) {
-    if (!state) {
+App.Core.addReducer('myReducer', function(state, action)
+{
+    if (!state)
+    {
         state = {
             count: 100,
             message: 'Hello World'
@@ -17,20 +19,39 @@ App.Core.addReducer('myReducer', function(state, action) {
     }
 });
 
-App.Core.addReducer('todos', function(state, action) {
-    if (!state) {
+App.Core.addReducer('todos', function(state, action) 
+{
+    if (!state)
+    {
         state = {
             list: []
         };
     }
 
-    switch (action.type)
-    {
-        case 'ADD':
-            return Object.assign({}, state, { 
-                list: state.list.push(action.payload)
+    var actionDirectory = {
+        ADD: function() 
+        {
+            return Object.assign({}, state, {
+                list: state.list.concat([action.payload])
             });
-        default:
-            return state;
+        }
     }
+
+    if (actionDirectory[action.type]) 
+    {
+        return state = actionDirectory[action.type]();
+    }
+
+    return state;
+
+    // switch (action.type)
+    // {
+    //     case 'ADD':
+    //         console.log('add reducer', state.list)
+    //         return Object.assign({}, state, { 
+    //             list: state.list.concat([action.payload])
+    //         });
+    //     default:
+    //         return state;
+    // }
 });

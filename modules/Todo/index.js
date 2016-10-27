@@ -1,54 +1,73 @@
 'use strict';
 
-var template = [
-    '<h1 class="message">{{ message }}</h1>',
+var todoTemplate = [
+    '<div data-moduleid={{ moduleId }}>',
+        '<input type="text" id="input" placeholder="Type a todo">',
+        '<ul class="list">',
+        '</ul>',
+    '<div>'
 ].join('\n');
 
-App.Core.register('myModule', function(scope) 
+var listTemplate = [
+    '{{#each todos}}',
+        '<li>{{this}}</li>',
+    '{{/each}}'
+].join('\n')
+
+App.Core.register('todo', { select: 'todos' }, function(scope) 
 {
-    var initialState = scope.getState().myReducer;
+    var self = {}
 
-    var unsubscribe = scope.subscribe(handleNextState);
+    var events = [
+        { event: 'keypress', element: '#input', callback: handleSubmit }
+    ];
 
-    var count = new Observable(initialState.count, updateCount);
-    var message = new Observable(initialState.message, updateMessage);
-
-    function init()
+    function init() 
     {
-        var html = scope.templateToHtml({ message: message.get() }, template);
-        scope.append($('body'), html);
+        self.state = scope.getState();
 
-        scope.dispatch({ type: 'MESSAGE', payload: 'Hello' });
+        self.unsubscribe = scope.subscribe(handleNextState);
+        
+        self.todos = new Observable(self.state.list, updateList);
 
-        setTimeout(function() {
-            scope.dispatch({ type: 'MESSAGE', payload: 'Hello, World!' });
-        }, 3000);
+        var html = scope.templateToHtml({moduleId: scope.moduleId, todos: self.state.list }, todoTemplate);
+        scope.append($('#app'), html);
+
+        scope.dispatch({ type: 'ADD', payload: 'My first todo' });
+
+        scope.addEvent($(scope.$root), events);
     }
 
     function handleNextState()
     {
-        var state = scope.getState().myReducer;
+        self.state = scope.getState();
 
-        message.set(state.message);
-        count.set(state.count);
+        self.todos.set(self.state.list)
     }
 
-    function updateMessage (value)
+    function updateList(value)
     {
-        $('.message').html(value);
+        scope.remove($('.list').children());
+
+        var html = scope.templateToHtml({ todos: value }, listTemplate);
+        
+        scope.append($('.list'), html);
     }
 
-    function updateCount (value)
+    function handleSubmit(e)
     {
-        $('.count').val(value);
+        if (e.which === 13) {
+            scope.dispatch({ type: 'ADD', payload: e.target.value });
+            e.target.value = '';
+        }
     }
 
     function destroy()
     {
-        store.unsubscribe(handleNextState);
+        self.unsubscribe(handleNextState);
     }
 
-    return {
+    return {
         init: init
-    }
+    };
 });
