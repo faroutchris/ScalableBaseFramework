@@ -1,0 +1,19 @@
+{
+  "name": "app-architecture",
+  "version": "1.0.0",
+  "description": "A scalable base framework",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faroutchris/ScalableBaseFramework.git"
+  },
+  "author": "Christo Georgiev",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.14.0",
+    "nodemon": "^1.11.0"
+  }
+}

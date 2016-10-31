@@ -16,6 +16,12 @@ var listTemplate = [
 
 App.Core.register('todo', { select: 'todos' }, function(scope) 
 {
+    var myTemplate = fetch('modules/Todo/template.hbs').then(function(res) {
+        return res
+    });
+
+
+    console.log(myTemplate)
     var self = {}
 
     var events = [
@@ -27,7 +33,7 @@ App.Core.register('todo', { select: 'todos' }, function(scope)
         self.state = scope.getState();
 
         self.unsubscribe = scope.subscribe(handleNextState);
-        
+
         self.todos = new Observable(self.state.list, updateList);
 
         var html = scope.templateToHtml({moduleId: scope.moduleId, todos: self.state.list }, todoTemplate);
