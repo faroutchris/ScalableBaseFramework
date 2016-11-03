@@ -5,7 +5,6 @@ App.Core.addReducer('myReducer', function(state, action)
     if (!state)
     {
         state = {
-            count: 100,
             message: 'Hello World'
         };
     }

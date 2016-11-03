@@ -16,13 +16,21 @@ var listTemplate = [
 
 App.Core.register('todo', { select: 'todos' }, function(scope) 
 {
-    var myTemplate = fetch('modules/Todo/template.hbs').then(function(res) {
-        return res
-    });
-
-
-    console.log(myTemplate)
     var self = {}
+
+    // var myTemplate = fetch('modules/Todo/template.hbs')
+    // .then(function(res) {
+    //     if (res.status >= 200 && res.status < 300) {
+    //         return res
+    //     }
+    // }).then(function(res) {
+    //     return res.text()
+    // }).then(function(text) {
+    //     return text;
+    // });
+
+    // console.log(myTemplate)
+    // setTimeout(function() {console.log(myTemplate)}, 100)
 
     var events = [
         { event: 'keypress', element: '#input', callback: handleSubmit }

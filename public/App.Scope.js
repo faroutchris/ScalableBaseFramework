@@ -16,12 +16,12 @@ App.Scope = function(core, options, id)
         return core.store.getState()[options.select];
     }
 
-    console.log('app.scope', core, core.store.getState())
-
     return {
         getState: wrapGetState,
         dispatch: wrapDispatch,
         subscribe: core.store.subscribe,
+
+        bind: simulacra.bind(window), // bind this in core instead. Too many copies here I think.
 
         moduleId: id,
         $root: '*[data-moduleid="' +  toDash(id) + '"]',
@@ -29,6 +29,6 @@ App.Scope = function(core, options, id)
         remove: core.View.remove,
         templateToHtml: core.View.templateToHtml,
         addEvent: core.View.addEvent,
-        removeEvent: core.View.removeEvent,
+        removeEvent: core.View.removeEvent
     };
 };

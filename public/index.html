@@ -3,16 +3,23 @@
 <head>
     <meta charset="utf-8">
     <title>Scalable Base Framework</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div id="app"></div>
+    <div id="app">
+        <div id="parent">
+            <div class="message">Hello</div>
+            <button id="btn">Click me</button>
+        </div>
+    </div>
 
 </body>
 <!-- Dependencies -->
 <script src="./../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="./../bower_components/handlebars/handlebars.min.js"></script>
 <script src="./../bower_components/redux/index.js"></script>
+<script src="./../bower_components/simulacra/index.js"></script>
 <script src="utils.js"></script>
 
 <!-- App -->
@@ -21,11 +28,15 @@
 <script src="App.Core.js"></script>
 <script src="App.Core.View.js"></script>
 
+<!-- Utils -->
+<script src="App.Util.Module.js"></script>
+
 <!-- Store -->
 <script src="store/index.js"></script>
 
 <!-- Modules -->
 <script src="modules/Todo/index.js"></script>
+<script src="modules/Bind/index.js"></script>
 
 <script>
 
@@ -40,6 +51,7 @@
     );
 
     App.Core.start('todo');
+    App.Core.start('bind');
 
 })();
 
