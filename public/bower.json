@@ -17,6 +17,7 @@
     "handlebars": "^4.0.5",
     "jquery": "^3.1.1",
     "redux": "https://cdnjs.cloudflare.com/ajax/libs/redux/3.0.4/redux.js",
-    "simulacra": "http://simulacra.js.org/simulacra.js"
+    "ractive": "^0.8.4",
+    "ractive-load": "https://cdn.jsdelivr.net/ractive.load/latest/ractive-load.min.js"
   }
 }

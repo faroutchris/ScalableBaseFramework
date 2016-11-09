@@ -3,5 +3,7 @@
 App.Util = {};
 
 App.Util.Module = function(moduleCreator) {
-    return moduleCreator
+    return function(scope) {
+        
+    }
 }

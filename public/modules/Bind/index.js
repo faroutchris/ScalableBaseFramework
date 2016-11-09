@@ -1,16 +1,15 @@
 'use strict';
 
 var template = [
-    '<template data-moduleid="{{ moduleId }}">',
-        '<div class="message" data-bind="text:message"></div>',
-        '<input data-bind="value:message" type="text" value="{{message}}"/>',
-    '</template>'
+    '<div id="parent">',
+        '<div class="message">Hello</div>',
+        '<button id="btn">Click me</button>',
+    '</div>'
 ].join('\n');
 
-App.Core.register('bind', {select: 'myReducer'}, App.Util.Module(function(scope) 
+App.Core.register('bind', {select: 'myReducer'}, function(scope) 
 {
     var self = {}
-    console.log('what is this', this)
 
     function init() 
     {
@@ -21,7 +20,7 @@ App.Core.register('bind', {select: 'myReducer'}, App.Util.Module(function(scope)
             self.unsubscribe = scope.subscribe(handleNextState);
         }
 
-        function setupDom() 
+        function setupDom()
         {
             var html = document.getElementById('parent')
 
@@ -60,13 +59,6 @@ App.Core.register('bind', {select: 'myReducer'}, App.Util.Module(function(scope)
         self.unsubscribe(handleNextState);
     }
 
-    // var setMessageClass = scope.bind.flow(
-    //     setDefault,
-    //     bindEvents({
-            
-    //     })
-    // )
-
     function setMessageClass(element, next, prev) 
     {
         (next === 'red') 
@@ -77,4 +69,4 @@ App.Core.register('bind', {select: 'myReducer'}, App.Util.Module(function(scope)
     return {
         init: init
     };
-}));
+});

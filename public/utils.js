@@ -41,10 +41,7 @@ Observable.prototype = {
 
 //     var dispatch = function(action) 
 //     {
-//         console.log(action);
-//         console.log('PREVIOUS STATE', state);
 //         state = reducer(state, action);
-//         console.log('NEW STATE', state)
 //         listeners.forEach(function(listener) 
 //         {
 //             return listener();

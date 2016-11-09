@@ -17,13 +17,14 @@ App.Scope = function(core, options, id)
     }
 
     return {
+        moduleId: id,
+
         getState: wrapGetState,
         dispatch: wrapDispatch,
         subscribe: core.store.subscribe,
 
-        bind: simulacra.bind(window), // bind this in core instead. Too many copies here I think.
-
-        moduleId: id,
+        bind: curry(Ractive),
+        
         $root: '*[data-moduleid="' +  toDash(id) + '"]',
         append: core.View.append,
         remove: core.View.remove,

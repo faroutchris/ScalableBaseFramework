@@ -5,7 +5,8 @@ App.Core.addReducer('myReducer', function(state, action)
     if (!state)
     {
         state = {
-            message: 'Hello World'
+            message: 'Hello World',
+            color: 'blue'
         };
     }
 
@@ -13,6 +14,8 @@ App.Core.addReducer('myReducer', function(state, action)
     {
         case 'MESSAGE':
             return Object.assign({}, state, { message: action.payload });
+        case 'URGENT':
+            return Object.assign({}, state, { color: action.payload ? 'red' : 'blue' });
         default:
             return state;
     }

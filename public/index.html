@@ -8,10 +8,10 @@
 <body>
 
     <div id="app">
-        <div id="parent">
+        <!--<div id="parent">
             <div class="message">Hello</div>
             <button id="btn">Click me</button>
-        </div>
+        </div>-->
     </div>
 
 </body>
@@ -19,8 +19,11 @@
 <script src="./../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="./../bower_components/handlebars/handlebars.min.js"></script>
 <script src="./../bower_components/redux/index.js"></script>
-<script src="./../bower_components/simulacra/index.js"></script>
+<script src="./../bower_components/ractive/ractive.js"></script>
+<script src="./../bower_components/ractive-load/index.js"></script>
 <script src="utils.js"></script>
+
+<script src="helpers/extendFunction.js"></script>
 
 <!-- App -->
 <script src="app.js"></script>
@@ -37,6 +40,11 @@
 <!-- Modules -->
 <script src="modules/Todo/index.js"></script>
 <script src="modules/Bind/index.js"></script>
+<script src="modules/Ractive/index.js"></script>
+
+<script id="ractive-test" type="text/ractive">
+    <div class="message">{{message}}</div>
+</script>
 
 <script>
 
@@ -50,8 +58,9 @@
         Redux.combineReducers(App.Core.getReducers())
     );
 
-    App.Core.start('todo');
-    App.Core.start('bind');
+    //App.Core.start('todo');
+    //App.Core.start('bind');
+    App.Core.start('ractive');
 
 })();
 
