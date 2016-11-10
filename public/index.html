@@ -7,7 +7,14 @@
 </head>
 <body>
 
-    <div id="app"></div>
+    <div id="app">
+        <header>
+            My Course
+            <div id="menu"></div>
+        </header>
+        <section id="sidebar"></section>
+        <section id="main"></section>
+    </div>
 
 </body>
 <!-- Dependencies -->
@@ -15,6 +22,7 @@
 <script src="./../bower_components/handlebars/handlebars.min.js"></script>
 <script src="./../bower_components/redux/index.js"></script>
 <script src="./../bower_components/ractive/ractive.js"></script>
+<script src="./../bower_components/rlite/rlite.js"></script>
 
 <script src="utils.js"></script>
 
@@ -31,6 +39,9 @@
 
 <!-- Store -->
 <script src="store/index.js"></script>
+
+<!-- Routes -->
+<script src="routes.js"></script>
 
 <!-- Modules -->
 <script src="modules/Todo/index.js"></script>
@@ -57,7 +68,6 @@
     //App.Core.start('bind');
     App.Core.start('menu');   
     //App.Core.start('ractive');
-
 })();
 
 </script>

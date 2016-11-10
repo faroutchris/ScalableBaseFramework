@@ -4,6 +4,7 @@ App.Core = (function() {
     /**
      * Manage module lifecycle.
      * Manage application state & communication
+     * Manage routing
      * TODO: error handling
      */
 
@@ -11,6 +12,15 @@ App.Core = (function() {
     var modules = {};
     var instances = {};
     var reducers = {};
+    var router = Rlite()
+
+    function processHash() {
+        var hash = location.hash || '#';
+        router.run(hash.slice(1));
+    }
+
+    window.addEventListener('hashchange', processHash);
+    processHash();
 
     return {
         
@@ -57,10 +67,14 @@ App.Core = (function() {
         },
 
         destroy: function (id) {
-            console.log(instances)            
+            console.log(instances)
             delete instances[id];
             console.log(instances)
             console.log('remove from instances')
+        },
+
+        destroyAll: function () {
+            console.log('destroyAll() to be implemented')
         },
 
         // Reducers
@@ -72,7 +86,12 @@ App.Core = (function() {
 
         addReducer: function(key, reducer) {
             reducers[key] = reducer;
-            console.log(this)
+        },
+
+        // router
+
+        addRoute: function(route, callback) {
+            router.add(route, callback);
         }
     }
 })();

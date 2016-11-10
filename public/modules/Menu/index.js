@@ -12,8 +12,9 @@ App.Core.register('menu', {
         unsubscribe = scope.subscribe(handleNextState);
 
         scope.loadTemplate.then(function(template) {
+            
             scope.bind = new scope.bind({
-                el: '#app',
+                el: '#menu',
                 template: template,
                 twoway: false,
                 data: Object.assign({}, scope.getState(), { 
@@ -22,22 +23,12 @@ App.Core.register('menu', {
             });
 
             listen();
+            
         });
     }
 
     var listen = function() {
 
-        scope.bind.on('toggle-change', function(event) {
-            if (scope.bind.get('color') === 'blue') {
-                scope.dispatch({type: 'URGENT', payload: true });
-            } else {
-                scope.dispatch({type: 'URGENT', payload: false });
-            }
-        });
-
-        scope.bind.on('destroy-module', function(event) {
-            destroy();
-        });
     }
 
     var destroy = function() {

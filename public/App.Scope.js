@@ -11,6 +11,7 @@ App.Scope = function(core, options, id) {
     }
 
     function wrapGetState() {
+        // Only get the selected part of the state tree
         return core.store.getState()[options.select];
     }
 

@@ -5,7 +5,7 @@ App.Core.addReducer('menu', function(state, action) {
     if (!state) {
         state = {
             items: [
-                { id: 0, name: 'Introduction', linkTo: '#introduction', status: 0 }, 
+                { id: 0, name: 'Introduction', linkTo: '#home', status: 0 }, 
                 { id: 1, name: 'Customer Treatment', linkTo: '#customer-treatment', status: 0 }, 
                 { id: 2, name: 'Responsibility', linkTo: '#responsibility', status: 0 }, 
                 { id: 3, name: 'Registration', linkTo: '#registration', status: 0 }
