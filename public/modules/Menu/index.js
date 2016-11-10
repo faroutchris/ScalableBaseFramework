@@ -1,8 +1,8 @@
 'use strict';
 
-App.Core.register('ractive', { 
-    select: 'myReducer', 
-    templateUrl: 'modules/Ractive/template.html' 
+App.Core.register('menu', {
+    select: 'menu',
+    templateUrl: 'modules/Menu/template.html'
 }, function(scope) {
 
     var unsubscribe;
@@ -14,11 +14,11 @@ App.Core.register('ractive', {
         scope.loadTemplate.then(function(template) {
             scope.bind = new scope.bind({
                 el: '#app',
+                template: template,
+                twoway: false,
                 data: Object.assign({}, scope.getState(), { 
                     moduleId: scope.moduleId
                 }),
-                template: template,
-                twoway: false
             });
 
             listen();

@@ -1,17 +1,35 @@
 'use strict';
 
-App.Core.addReducer('myReducer', function(state, action)
-{
-    if (!state)
-    {
+
+App.Core.addReducer('menu', function(state, action) {
+    if (!state) {
+        state = {
+            items: [
+                { id: 0, name: 'Introduction', linkTo: '#introduction', status: 0 }, 
+                { id: 1, name: 'Customer Treatment', linkTo: '#customer-treatment', status: 0 }, 
+                { id: 2, name: 'Responsibility', linkTo: '#responsibility', status: 0 }, 
+                { id: 3, name: 'Registration', linkTo: '#registration', status: 0 }
+            ],
+            active: 0
+        };
+    }
+
+    switch (action.type) {
+        default:
+            return state;
+    }
+});
+
+
+App.Core.addReducer('myReducer', function(state, action) {
+    if (!state) {
         state = {
             message: 'Hello World',
             color: 'blue'
         };
     }
 
-    switch (action.type)
-    {
+    switch (action.type) {
         case 'MESSAGE':
             return Object.assign({}, state, { message: action.payload });
         case 'URGENT':
@@ -21,39 +39,24 @@ App.Core.addReducer('myReducer', function(state, action)
     }
 });
 
-App.Core.addReducer('todos', function(state, action) 
-{
-    if (!state)
-    {
+App.Core.addReducer('todos', function(state, action) {
+    if (!state) {
         state = {
             list: []
         };
     }
 
     var actionDirectory = {
-        ADD: function() 
-        {
+        ADD: function() {
             return Object.assign({}, state, {
                 list: state.list.concat([action.payload])
             });
         }
     }
 
-    if (actionDirectory[action.type]) 
-    {
+    if (actionDirectory[action.type]) {
         return state = actionDirectory[action.type]();
     }
 
     return state;
-
-    // switch (action.type)
-    // {
-    //     case 'ADD':
-    //         console.log('add reducer', state.list)
-    //         return Object.assign({}, state, { 
-    //             list: state.list.concat([action.payload])
-    //         });
-    //     default:
-    //         return state;
-    // }
 });

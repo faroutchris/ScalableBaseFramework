@@ -1,0 +1,18 @@
+<ul data-id="{{ moduleId }}">
+    {{#each items:i}}
+        {{>item}}
+    {{/each}}
+</ul>
+
+{{#partial item}}
+<li {{#if (i === active) }} class="active" {{/if}}>
+    
+    <a href="{{items[i].linkTo}}">
+        {{items[i].name}}
+        {{#if (i === done)}}
+        <span>Done</span>
+        {{/if}}
+    </a>
+
+</li>
+{{/partial}}

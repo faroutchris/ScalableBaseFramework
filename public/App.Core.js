@@ -1,7 +1,6 @@
 'use strict';
 
-App.Core = (function() 
-{
+App.Core = (function() {
     /**
      * Manage module lifecycle.
      * Manage application state & communication
@@ -15,14 +14,15 @@ App.Core = (function()
 
     return {
         
-        register: function(id, options, creatorCallback)
-        {
+        register: function(id, options, creatorCallback) {
+
             if (isFunction(creatorCallback)) {
                 // The important bit ->
                 modules[id] = {
                     creator: creatorCallback,
                     options: options
                 };
+
             } else {
                 throw new Error(
                     'You are trying to register a module without a creator function. ' +
@@ -31,27 +31,36 @@ App.Core = (function()
             }
         },
 
-        start: function(id)
-        {
+        start: function(id) {
             if (modules[id]) {
                 if ( instances[id] === undefined ) { // Check that the instance isn't already running
+                // It is very important that the modules actually return something, otherwise you can spawn however many
+                // modules without throwing an error
+
+                    // The important bit ->
                     instances[id] = modules[id].creator( App.Scope(this, modules[id].options, id) );
+                    instances[id].init();          
+               
                 } else {
                     throw new Error(id + ' is already a running instance.');
                 }
-
-                instances[id].init();
             } else {
                 throw new Error(id + ': make sure to register this module before trying to run it.');
             }
         },
 
-        startAll: function ()
-        {
+        startAll: function () {
             for (var id in modules) 
             {
                 modules.hasOwnProperty(id) ? this.start(id) : console.error( id + ' has not been registered');
             }
+        },
+
+        destroy: function (id) {
+            console.log(instances)            
+            delete instances[id];
+            console.log(instances)
+            console.log('remove from instances')
         },
 
         // Reducers
@@ -61,8 +70,7 @@ App.Core = (function()
             return reducers; 
         },
 
-        addReducer: function(key, reducer) 
-        {
+        addReducer: function(key, reducer) {
             reducers[key] = reducer;
             console.log(this)
         }
