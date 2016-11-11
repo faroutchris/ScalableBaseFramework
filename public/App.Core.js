@@ -12,15 +12,7 @@ App.Core = (function() {
     var modules = {};
     var instances = {};
     var reducers = {};
-    var router = Rlite()
-
-    function processHash() {
-        var hash = location.hash || '#';
-        router.run(hash.slice(1));
-    }
-
-    window.addEventListener('hashchange', processHash);
-    processHash();
+    var Router;
 
     return {
         
@@ -60,21 +52,21 @@ App.Core = (function() {
         },
 
         startAll: function () {
-            for (var id in modules) 
-            {
+            for (var id in modules) {
                 modules.hasOwnProperty(id) ? this.start(id) : console.error( id + ' has not been registered');
             }
         },
 
         destroy: function (id) {
-            console.log(instances)
+            instances[id].destroy();
             delete instances[id];
-            console.log(instances)
             console.log('remove from instances')
         },
 
         destroyAll: function () {
-            console.log('destroyAll() to be implemented')
+            for (var id in instances) {
+                instances.hasOwnProperty(id) ? this.destroy(id) : console.error( id + ' is not a running instance');
+            }
         },
 
         // Reducers
@@ -90,8 +82,10 @@ App.Core = (function() {
 
         // router
 
+        Router: Rlite(),
+
         addRoute: function(route, callback) {
-            router.add(route, callback);
+            this.Router.add(route, callback);
         }
     }
 })();

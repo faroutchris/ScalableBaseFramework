@@ -7,11 +7,11 @@
 {{#partial item}}
 <li {{#if (i === active) }} class="active" {{/if}}>
     
+    {{#if (status === 2)}}
+    <span>Done</span>
+    {{/if}}
     <a href="{{items[i].linkTo}}">
         {{items[i].name}}
-        {{#if (i === done)}}
-        <span>Done</span>
-        {{/if}}
     </a>
 
 </li>

@@ -13,7 +13,7 @@ App.Core.register('ractive', {
 
         scope.loadTemplate.then(function(template) {
             scope.bind = new scope.bind({
-                el: '#app',
+                el: '#content',
                 data: Object.assign({}, scope.getState(), { 
                     moduleId: scope.moduleId
                 }),
@@ -28,11 +28,7 @@ App.Core.register('ractive', {
     var listen = function() {
 
         scope.bind.on('toggle-change', function(event) {
-            if (scope.bind.get('color') === 'blue') {
-                scope.dispatch({type: 'URGENT', payload: true });
-            } else {
-                scope.dispatch({type: 'URGENT', payload: false });
-            }
+            scope.dispatch({type: 'DONE', itemId: 0, payload: 2 });
         });
 
         scope.bind.on('destroy-module', function(event) {
@@ -42,8 +38,6 @@ App.Core.register('ractive', {
 
     var destroy = function() {
         unsubscribe();
-        scope.bind.teardown();
-        scope.destroy(scope.moduleId);
     }
 
     var handleNextState = function() {

@@ -1,6 +1,5 @@
 'use strict';
 
-
 App.Core.addReducer('menu', function(state, action) {
     if (!state) {
         state = {
@@ -15,11 +14,26 @@ App.Core.addReducer('menu', function(state, action) {
     }
 
     switch (action.type) {
+        case 'DONE': {
+        
+            return Object.assign({}, state, { items: state.items.map(function(item) {
+            
+                    if (item.id === action.itemId) {
+                        item.status = action.payload;
+                        return item;
+                    } 
+                    else {
+                        return item;
+                    }
+            
+                })
+            });
+
+        }
         default:
             return state;
     }
 });
-
 
 App.Core.addReducer('myReducer', function(state, action) {
     if (!state) {

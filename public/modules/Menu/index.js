@@ -23,7 +23,7 @@ App.Core.register('menu', {
             });
 
             listen();
-            
+
         });
     }
 
@@ -33,8 +33,6 @@ App.Core.register('menu', {
 
     var destroy = function() {
         unsubscribe();
-        scope.bind.teardown();
-        scope.destroy(scope.moduleId);
     }
 
     var handleNextState = function() {

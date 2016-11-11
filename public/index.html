@@ -13,7 +13,7 @@
             <div id="menu"></div>
         </header>
         <section id="sidebar"></section>
-        <section id="main"></section>
+        <section id="content"></section>
     </div>
 
 </body>
@@ -64,10 +64,13 @@
         Redux.combineReducers(App.Core.getReducers())
     );
 
-    //App.Core.start('todo');
-    //App.Core.start('bind');
-    App.Core.start('menu');   
-    //App.Core.start('ractive');
+    function processHash() {
+        var hash = location.hash || '#';
+        App.Core.Router.run(hash.slice(1));
+    }
+
+    window.addEventListener('hashchange', processHash);
+    processHash();
 })();
 
 </script>
