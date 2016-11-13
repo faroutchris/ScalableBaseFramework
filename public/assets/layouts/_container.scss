@@ -1,0 +1,22 @@
+#app {
+    header {
+        margin-bottom: 40px;
+    }
+
+    #instruction {
+        @include outer-container();
+        margin-bottom: 40px;
+    }
+
+    .wrap {
+        @include outer-container();
+    }
+
+    #sidebar {
+        @include span-columns(3);
+    }
+
+    #content {
+        @include span-columns(6);
+    }
+}

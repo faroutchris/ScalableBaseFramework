@@ -3,17 +3,21 @@
 <head>
     <meta charset="utf-8">
     <title>Scalable Base Framework</title>
+    <link href="https://fonts.googleapis.com/css?family=Arvo|Lato" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <div id="app">
         <header>
-            My Course
-            <div id="menu"></div>
+            <div id="top-bar"></div>
         </header>
-        <section id="sidebar"></section>
-        <section id="content"></section>
+        <section id="instruction"></section>
+        <section id="menu"></section>
+        <div class="wrap">
+            <section id="sidebar">Sidebar</section>
+            <section id="content"></section>
+        </div>
     </div>
 
 </body>
@@ -44,14 +48,10 @@
 <script src="routes.js"></script>
 
 <!-- Modules -->
-<script src="modules/Todo/index.js"></script>
 <script src="modules/Menu/index.js"></script>
-<script src="modules/Ractive/index.js"></script>
-
-<script id="ractive-test" type="text/ractive">
-    <div class="message">{{message}}</div>
-</script>
-
+<script src="modules/TopBar/index.js"></script>
+<script src="modules/Instruction/index.js"></script>
+<script src="modules/CourseLayout/index.js"></script>
 <script>
 
 (function() {

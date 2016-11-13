@@ -1,0 +1,40 @@
+[data-id="topbar"] {
+    $height: 60px;
+    $border-style: 1px solid rgba(255,255,255,0.2);
+    
+    color: #fff;
+
+    .inner {
+        @include outer-container();
+    }
+
+    .title {
+        height: $height;
+        line-height: $height;
+        border-bottom: $border-style;
+        background: #0000a0;
+    }
+
+    .title img {
+        display: inline-block;
+        margin: 18px 0;
+        height: 32px;
+    }
+
+    .title span {
+        float: right;
+        font-size: 14px;
+    }
+
+    .hero {
+        height: $height * 3;
+        text-align: center;
+        padding-top: 60px;
+        background: #0000a0;
+        border-bottom: $border-style;
+    }
+
+    .hero h2 {
+        font-weight: normal;
+    }
+}

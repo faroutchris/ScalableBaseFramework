@@ -1,0 +1,24 @@
+<ul data-id="{{ moduleId }}">
+    {{#each layout.scenarios:i}}
+        {{>scenario}}
+    {{/each}}
+</ul>
+
+{{#partial scenario}}
+<li class="scenario">
+    
+    {{#if (layout.scenarios[i].type === 'video') }}
+    <div class="icon">
+        <i class="fa fa-video-camera"></i>
+    </div>
+    {{/if}}
+    
+    {{#if (layout.scenarios[i].type === 'exercise') }}
+    <div class="icon">
+        <i class="fa fa-university"></i>
+    </div>
+    {{/if}}
+
+    {{layout.scenarios[i].title}}
+</li>
+{{/partial}}

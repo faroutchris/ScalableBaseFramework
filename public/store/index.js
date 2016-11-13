@@ -4,7 +4,7 @@ App.Core.addReducer('menu', function(state, action) {
     if (!state) {
         state = {
             items: [
-                { id: 0, name: 'Introduction', linkTo: '#home', status: 0 }, 
+                { id: 0, name: 'Introduction', linkTo: '#introduction', status: 0 }, 
                 { id: 1, name: 'Customer Treatment', linkTo: '#customer-treatment', status: 0 }, 
                 { id: 2, name: 'Responsibility', linkTo: '#responsibility', status: 0 }, 
                 { id: 3, name: 'Registration', linkTo: '#registration', status: 0 }
@@ -30,8 +30,32 @@ App.Core.addReducer('menu', function(state, action) {
             });
 
         }
-        default:
+        default: {
             return state;
+        }
+    }
+});
+
+App.Core.addReducer('course', function(state, action) {
+    if (!state) {
+        state = {
+            title: 'Complaint Handling for Retail Banking',
+            organization: 'Nordea',
+            layout: {
+                name: 'Introduction',
+                scenarios: [
+                    {type: 'video', title: 'Welcome', cdnId: 'abcdef'},
+                    {type: 'exercise', title: 'What is your responsibility', content: ['hello']},
+                    {type: 'video', title: 'How to handle customers', cdnId: 'abcdef'},
+                ]
+            }
+        };
+    }
+
+    switch (action.type) {
+        default: {
+            return state;
+        }
     }
 });
 
@@ -51,26 +75,4 @@ App.Core.addReducer('myReducer', function(state, action) {
         default:
             return state;
     }
-});
-
-App.Core.addReducer('todos', function(state, action) {
-    if (!state) {
-        state = {
-            list: []
-        };
-    }
-
-    var actionDirectory = {
-        ADD: function() {
-            return Object.assign({}, state, {
-                list: state.list.concat([action.payload])
-            });
-        }
-    }
-
-    if (actionDirectory[action.type]) {
-        return state = actionDirectory[action.type]();
-    }
-
-    return state;
 });

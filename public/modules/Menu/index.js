@@ -22,16 +22,11 @@ App.Core.register('menu', {
                 }),
             });
 
-            listen();
-
         });
     }
 
-    var listen = function() {
-
-    }
-
     var destroy = function() {
+        scope.bind.teardown();
         unsubscribe();
     }
 

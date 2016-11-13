@@ -1,0 +1,37 @@
+$gradient-base:lighten(#0b8793, 30%);
+$gradients: ($gradient-base, tint(adjust-hue($gradient-base, 20deg), 5%)), 
+    (tint(adjust-hue($gradient-base, 20deg), 5%), tint(adjust-hue($gradient-base, 40deg), 10%)), 
+    (tint(adjust-hue($gradient-base, 40deg), 10%), tint(adjust-hue($gradient-base, 60deg), 15%)), 
+    (tint(adjust-hue($gradient-base, 60deg), 15%), tint(adjust-hue($gradient-base, 80deg), 20%));
+
+@mixin new-radial-gradient($gradients) {
+  background-image: -webkit-linear-gradient(left, #{$gradients});
+}
+
+[data-id="menu"] {
+    @include outer-container();
+    $menu-height: rem(180); 
+
+    li {
+        @include span-columns(3);
+        position:relative;
+        background: #ccc;
+        height: $menu-height;
+        text-align: center;
+        border-radius: 5px;
+        
+        a {
+            color: #fff;
+            text-shadow: 0 0 12px lighten(rgba(0,0,0,0.3), 60%);
+            display: inline-block;
+            line-height: $menu-height;
+        }
+    }
+
+    @for $i from 1 through 4 {
+	    li:nth-child(4n+#{$i}) {
+		    @include new-radial-gradient(nth($gradients, $i));
+	    }
+    }
+
+}

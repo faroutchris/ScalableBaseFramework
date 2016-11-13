@@ -4,7 +4,7 @@ App.Core = (function() {
     /**
      * Manage module lifecycle.
      * Manage application state & communication
-     * Manage routing
+     * Manage routing (fold into state?)
      * TODO: error handling
      */
 
@@ -33,14 +33,15 @@ App.Core = (function() {
             }
         },
 
-        start: function(id) {
+        start: function(id, props) {
             if (modules[id]) {
                 if ( instances[id] === undefined ) { // Check that the instance isn't already running
-                // It is very important that the modules actually return something, otherwise you can spawn however many
-                // modules without throwing an error
+                    // It is very important that the modules actually return an object, otherwise you can spawn
+                    // infinitely many of the same module without throwing an error
+                    // TODO: Make it error out for this case
 
                     // The important bit ->
-                    instances[id] = modules[id].creator( App.Scope(this, modules[id].options, id) );
+                    instances[id] = modules[id].creator( App.Scope(this, modules[id].options, props, id) );
                     instances[id].init();          
                
                 } else {
